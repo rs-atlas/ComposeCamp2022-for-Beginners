@@ -45,7 +45,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ){
 //                    BirthdayGreetingWithText(message = "Hi android", from = "from Apple")
-                    BirthdayGreetingWithImage(message = "Hi android", from = "from Apple")
+                    BirthdayGreetingWithImage(message = stringResource(R.string.happy_birthday_text), from = stringResource(
+                                            R.string.signagture_text))
                 }
             }
 
@@ -72,7 +73,7 @@ fun BirthdayGreetingWithText(message: String, from: String, modifier: Modifier =
             fontSize = 36.sp,
             modifier = Modifier
                 .padding(16.dp)
-                .align(alignment = Alignment.End)
+                .align(alignment = Alignment.CenterHorizontally)
             )
     }
 }
@@ -83,7 +84,8 @@ fun BirthdayGreetingWithImage(message: String, from: String, modifier: Modifier 
     val image = painterResource(R.drawable.androidparty)
     Box() {
         Image(painter = image, contentDescription = null
-        , contentScale = ContentScale.Crop)
+        , contentScale = ContentScale.Crop
+        ,alpha = 0.5F)
         BirthdayGreetingWithText(message = message, from = from ,
                                     modifier = Modifier
                                         .fillMaxSize()
