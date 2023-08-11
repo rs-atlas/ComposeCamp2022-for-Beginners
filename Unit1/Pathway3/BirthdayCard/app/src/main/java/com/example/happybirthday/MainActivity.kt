@@ -41,11 +41,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HappyBirthdayTheme {
-                Surface (
-                    modifier = Modifier.fillMaxSize(),
+                Surface(
                     color = MaterialTheme.colors.background
                 ){
-                    BirthdayGreetingWithText(message = "Hi android", from = "from Apple")
+//                    BirthdayGreetingWithText(message = "Hi android", from = "from Apple")
+                    BirthdayGreetingWithImage(message = "Hi android", from = "from Apple")
                 }
             }
 
@@ -79,14 +79,26 @@ fun BirthdayGreetingWithText(message: String, from: String, modifier: Modifier =
 
 // 5. Box 레이아웃 추가
 @Composable
-fun BirthdayGreetingWithImage(message: String, from: String) { }
+fun BirthdayGreetingWithImage(message: String, from: String, modifier: Modifier = Modifier) {
+    val image = painterResource(R.drawable.androidparty)
+    Box() {
+        Image(painter = image, contentDescription = null
+        , contentScale = ContentScale.Crop)
+        BirthdayGreetingWithText(message = message, from = from ,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(8.dp)
+        )
+    }
+}
 
 // 4. 이미지 컴포저블 추가
 @Preview(showBackground = true)
 @Composable
 private fun BirthdayCardPreview() {
     HappyBirthdayTheme {
-        BirthdayGreetingWithText(message = "Hi android", from = "from Apple")
+//        BirthdayGreetingWithText(message = "Hi android", from = "from Apple")
+        BirthdayGreetingWithImage(message = "Hi android", from = "from Apple")
     }
 }
 
