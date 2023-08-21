@@ -25,10 +25,18 @@ import androidx.compose.ui.res.painterResource
 import com.example.affirmationscodelab.model.Affirmation
 import com.example.affirmationscodelab.ui.theme.AffirmationsTheme
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.ui.layout.ContentScale
@@ -37,7 +45,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.lazy.items
-import com.example.affirmationscodelab.data.Datasource
+import androidx.compose.material.Icon
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.dimensionResource
+import com.example.affirmationscodelab.data.DataSource
+import com.example.affirmationscodelab.model.Topic
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +59,65 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Composable
+fun TopicGrid(modifier: Modifier = Modifier) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small)),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small)),
+        modifier = modifier
+    ) {
+        items(DataSource.topics) { topic ->
+            TopicCard(topic)
+        }
+    }
+}
+
+@Composable
+fun TopicCard(topic: Topic, modifier: Modifier = Modifier) {
+    Card {
+        Row {
+            Box {
+                Image(
+                    painter = painterResource(id = topic.imageRes),
+                    contentDescription = null,
+                    modifier = modifier
+                        .size(width = 68.dp, height = 68.dp)
+                        .aspectRatio(1f),
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            Column {
+                Text(
+                    text = stringResource(id = topic.name),
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.padding(
+                        start = dimensionResource(R.dimen.padding_medium),
+                        top = dimensionResource(R.dimen.padding_medium),
+                        end = dimensionResource(R.dimen.padding_medium),
+                        bottom = dimensionResource(R.dimen.padding_small)
+                    )
+                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        painter = painterResource(androidx.core.R.drawable.ic_call_answer),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(start = dimensionResource(R.dimen.padding_medium))
+                    )
+                    Text(
+                        text = topic.availableCourses.toString(),
+                        style = MaterialTheme.typography.body2,
+                        modifier = Modifier.padding(start = dimensionResource(R.dimen.padding_small))
+                    )
+                }
+            }
+        }
+    }
+}
+
 
 @Composable
 fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Modifier) {
@@ -63,9 +134,13 @@ fun AffirmationList(affirmationList: List<Affirmation>, modifier: Modifier = Mod
 @Composable
 fun AffirmationApp() {
     AffirmationsTheme {
-        AffirmationList(
-            affirmationList = Datasource().loadAffirmations(),
+        TopicGrid(
+            modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
         )
+//        AffirmationList(
+//            affirmationList = Datasource().loadAffirmations(),
+//
+//        )
     }
 }
 
@@ -95,5 +170,5 @@ fun AffirmationCard(affirmation: Affirmation, modifier: Modifier = Modifier) {
 @Composable
 private fun AffirmationCardPreview(){
 
-    AffirmationCard(Affirmation(R.string.affirmation1,R.drawable.image1))
+//    AffirmationCard(Affirmation(R.string.affirmation1,R.drawable.image1))
 }
