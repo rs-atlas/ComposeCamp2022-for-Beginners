@@ -21,11 +21,11 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -85,9 +85,10 @@ fun CupcakeAppBar(
 }
 
 @Composable
-fun CupcakeApp(modifier: Modifier = Modifier, viewModel: OrderViewModel = viewModel()){
+fun CupcakeApp( navController: NavHostController = rememberNavController(),
+    modifier: Modifier = Modifier, viewModel: OrderViewModel = viewModel()){
     // TODO: Create NavController
-    val navController = rememberNavController()
+//    val navController = rememberNavController()
     // TODO: Get current back stack entry
     val backStackEntry by navController.currentBackStackEntryAsState()
     // TODO: Get the name of the current screen
@@ -117,7 +118,7 @@ fun CupcakeApp(modifier: Modifier = Modifier, viewModel: OrderViewModel = viewMo
         ){
             composable(route = CupcakeScreen.Start.name) {
                 StartOrderScreen(
-                    quantityOptions = DataSource.quantityOptions,
+                    quantityOptions = quantityOptions,
                     onNextButtonClicked = {
                         viewModel.setQuantity(it)
                         navController.navigate(CupcakeScreen.Flavor.name)
@@ -135,7 +136,7 @@ fun CupcakeApp(modifier: Modifier = Modifier, viewModel: OrderViewModel = viewMo
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
-                    options = DataSource.flavors.map { id -> context.resources.getString(id) },
+                    options = flavors.map { id -> context.resources.getString(id) },
                     onSelectionChanged = { viewModel.setFlavor(it) },
                     modifier = Modifier.fillMaxHeight()
                 )

@@ -25,9 +25,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -62,7 +62,7 @@ fun StartOrderScreen(
             modifier = Modifier.width(300.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = stringResource(R.string.order_cupcakes), style = MaterialTheme.typography.h4)
+        Text(text = stringResource(R.string.order_cupcakes), style = MaterialTheme.typography.displayLarge)
         Spacer(modifier = Modifier.height(8.dp))
         quantityOptions.forEach { item ->
             SelectQuantityButton(
