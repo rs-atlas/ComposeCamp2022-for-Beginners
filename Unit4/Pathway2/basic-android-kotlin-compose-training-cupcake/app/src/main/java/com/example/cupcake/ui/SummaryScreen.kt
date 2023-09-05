@@ -46,6 +46,8 @@ fun OrderSummaryScreen(
     orderUiState: OrderUiState,
     // TODO: add onCancelButtonClicked
     // TODO: add onSendButtonClicked
+    onCancelButtonClicked: () -> Unit,
+    onSendButtonClicked: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ){
     val resources = LocalContext.current.resources
@@ -90,23 +92,27 @@ fun OrderSummaryScreen(
         )
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { /* TODO: handle send button */ }
+            onClick = { /* TODO: handle send button */
+                onSendButtonClicked(newOrder, orderSummary)
+            }
         ) {
             Text(stringResource(R.string.send))
         }
         OutlinedButton(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { /* TODO: handle cancel button */ }
+            onClick = { /* TODO: handle cancel button */
+                onCancelButtonClicked
+            }
         ) {
             Text(stringResource(R.string.cancel))
         }
     }
 }
 
-@Preview
-@Composable
-fun OrderSummaryPreview(){
-    OrderSummaryScreen(
-        orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
-    )
-}
+//@Preview
+//@Composable
+//fun OrderSummaryPreview(){
+//    OrderSummaryScreen(
+//        orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
+//    )
+//}
